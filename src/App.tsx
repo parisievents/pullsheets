@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 
+// ==========================================
+// TYPESCRIPT BLUEPRINTS
+// ==========================================
+interface PullsheetItem {
+  id: string;
+  name: string;
+  fileName: string;
+}
+
 const App = () => {
   // 1. App Data
   const inventoryGroups = [
@@ -8,31 +17,17 @@ const App = () => {
       items: [
         {
           id: "p1",
-          name: "Everglades - Parisi",
+          name: "6-Hour Wedding DJ",
           fileName: "img/evergladesParisi.jpg",
         },
-        { id: "p2", name: "Banyan - Parisi", fileName: "img/banyanParisi.jpg" },
-        {
-          id: "p3",
-          name: "Flagler - Parisi",
-          fileName: "img/flaglerParisi.jpg",
-        },
-        { id: "p4", name: "Everglades", fileName: "img/everglades.jpg" },
-        { id: "p5", name: "Banyan", fileName: "img/banyan.jpg" },
-        { id: "p6", name: "Flagler", fileName: "img/flagler.jpg" },
+        { id: "p2", name: "Premium Band Audio", fileName: "/live-band.jpg" },
       ],
     },
     {
       categoryName: "Systems",
       items: [
-        {
-          id: "s1",
-          name: "Reception - Parisi",
-          fileName: "img/receptionParisi2.jpg",
-        },
-        { id: "s2", name: "Reception", fileName: "img/reception.jpg" },
-        { id: "s3", name: "Ceremony", fileName: "img/ceremony.jpg" },
-        { id: "s4", name: "Cocktail Hour", fileName: "img/cocktailHour.jpg" },
+        { id: "s1", name: "Photo Booth Kiosk", fileName: "/photo-booth.jpg" },
+        { id: "s2", name: "Corporate AV System", fileName: "/corporate.jpg" },
       ],
     },
     {
@@ -41,16 +36,9 @@ const App = () => {
         {
           name: "Sound",
           items: [
-            {
-              id: "i_s1",
-              name: "Premium Sound",
-              fileName: "img/premiumSound.jpg",
-            },
-            {
-              id: "i_s2",
-              name: "K8 With Stands",
-              fileName: "img/k8Stands.jpg",
-            },
+            { id: "i_s1", name: "Wireless Mic Kit", fileName: "/mics.jpg" },
+            { id: "i_s2", name: "Subwoofer Expansion", fileName: "/subs.jpg" },
+            { id: "i_s3", name: "DJ Monitor Wedge", fileName: "/wedge.jpg" },
           ],
         },
         {
@@ -58,23 +46,13 @@ const App = () => {
           items: [
             {
               id: "i_l1",
-              name: "Light Tubes",
-              fileName: "img/lightTubes2.jpg",
+              name: "Wireless Uplighting",
+              fileName: "/uplighting.jpg",
             },
             {
               id: "i_l2",
-              name: "Uplights Flex 12",
-              fileName: "img/uplightsFlex12.jpg",
-            },
-            {
-              id: "i_l3",
-              name: "Uplights Flex 18",
-              fileName: "img/uplightsFlex18.jpg",
-            },
-            {
-              id: "i_l3",
-              name: "Uplights Charge 18",
-              fileName: "img/uplightsCharge18.jpg",
+              name: "Moving Head Totems",
+              fileName: "/moving-heads.jpg",
             },
           ],
         },
@@ -83,13 +61,13 @@ const App = () => {
           items: [
             {
               id: "i_a1",
-              name: "Monogram",
-              fileName: "img/monogram.jpg",
+              name: "Projector & Screen",
+              fileName: "/projector.jpg",
             },
             {
               id: "i_a2",
-              name: "42 INCH TV",
-              fileName: "img/tvs.jpg",
+              name: "Confidence Monitor",
+              fileName: "/monitor.jpg",
             },
           ],
         },
@@ -98,51 +76,32 @@ const App = () => {
           items: [
             {
               id: "i_m1",
-              name: "Dancing on the Clouds",
-              fileName: "img/dancingClouds.jpg",
+              name: "Event Assistant Kit",
+              fileName: "/assistant-kit.jpg",
             },
-            {
-              id: "i_m2",
-              name: "Standalone Booth",
-              fileName: "img/standaloneBooth.jpg",
-            },
+            { id: "i_m2", name: "Trussing & Rigging", fileName: "/truss.jpg" },
           ],
         },
       ],
     },
     {
-      categoryName: "Photo Booths",
-      items: [
-        { id: "p1", name: "Flamingo Booth", fileName: "img/flamingoBooth.jpg" },
-        { id: "p2", name: "Social Booth", fileName: "img/socialBooth.jpg" },
-      ],
-    },
-    {
       categoryName: "Venue Floorplans",
       items: [
-        {
-          id: "f1",
-          name: "Addison Main Dining Room",
-          fileName: "img/addisonMain.jpg",
-        },
-        {
-          id: "f2",
-          name: "Addison Mizner Room",
-          fileName: "img/addisonMizner.jpg",
-        },
+        { id: "f1", name: "Standard Ballroom", fileName: "/ballroom.jpg" },
+        { id: "f2", name: "Outdoor Tent Layout", fileName: "/tent.jpg" },
       ],
     },
   ];
 
-  // 2. State Management
-  const [printQueue, setPrintQueue] = useState([]);
+  // 2. State Management (Now strictly typed as an array of PullsheetItems)
+  const [printQueue, setPrintQueue] = useState<PullsheetItem[]>([]);
 
-  // 3. Queue Logic
-  const addToQueue = (sheet) => {
+  // 3. Queue Logic (Added types to parameters)
+  const addToQueue = (sheet: PullsheetItem) => {
     setPrintQueue([...printQueue, sheet]);
   };
 
-  const removeFromQueue = (indexToRemove) => {
+  const removeFromQueue = (indexToRemove: number) => {
     setPrintQueue(printQueue.filter((_, index) => index !== indexToRemove));
   };
 
@@ -307,13 +266,11 @@ const App = () => {
            WEB FONTS & GLOBAL STYLES 
            --------------------------------------------------- */
            
-        /* Map your local font to all weights to stop the browser from applying fake muddy bolding */
         @font-face { font-family: 'Gotham Condensed'; src: url('/fonts/gothamcondensed-bold-webfont.woff2') format('woff2'); font-weight: 400; font-style: normal; }
         @font-face { font-family: 'Gotham Condensed'; src: url('/fonts/gothamcondensed-bold-webfont.woff2') format('woff2'); font-weight: 500; font-style: normal; }
         @font-face { font-family: 'Gotham Condensed'; src: url('/fonts/gothamcondensed-bold-webfont.woff2') format('woff2'); font-weight: 600; font-style: normal; }
         @font-face { font-family: 'Gotham Condensed'; src: url('/fonts/gothamcondensed-bold-webfont.woff2') format('woff2'); font-weight: 800; font-style: normal; }
 
-        /* Updated the font family universally */
         body { margin: 0; background-color: #faf9f6; font-family: 'Gotham Condensed', sans-serif; letter-spacing: 0.5px; }
         .app-wrapper { font-family: 'Gotham Condensed', sans-serif; min-height: 100vh; color: #1a1a1a; }
         
@@ -321,19 +278,18 @@ const App = () => {
            APP UI (Desktop Default)
            --------------------------------------------------- */
         .top-nav { position: sticky; top: 0; z-index: 1000; background-color: #111; padding: 25px 50px; border-bottom: 3px solid #c5a059; }
-        .nav-title { font-weight: 800; color: #fff; font-size: 40px; margin: 0; letter-spacing: 2px; }
+        .nav-title { font-weight: 800; color: #fff; font-size: 26px; margin: 0; letter-spacing: 2px; }
         .nav-subtitle { color: #c5a059; font-weight: 400; }
 
         .dashboard-container { max-width: 1500px; margin: 0 auto; padding: 50px; display: grid; grid-template-columns: 1fr 200px; gap: 40px; align-items: start; }
         
         .category-block { margin-bottom: 60px; }
-        .category-title { margin-top: 0; line-height: 1.2; font-weight: 800; font-size: 36px; color: #111; border-bottom: 1px solid #dcdcdc; padding-bottom: 12px; margin-bottom: 30px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .category-title { margin-top: 0; line-height: 1.2; font-weight: 800; font-size: 28px; color: #111; border-bottom: 1px solid #dcdcdc; padding-bottom: 12px; margin-bottom: 30px; letter-spacing: 0.5px; text-transform: uppercase; }
         
         .subcategory-block { margin-bottom: 40px; }
-        .subcategory-title { font-weight: 600; font-size: 26px; color: #c5a059; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 20px 0; }
+        .subcategory-title { font-weight: 600; font-size: 18px; color: #c5a059; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 20px 0; }
 
-        /* Flexible Grid for Desktop: Automatically fits as many 160px cards as it can */
-        .ui-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .ui-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
         
         .item-card { 
           width: 100%; 
@@ -348,11 +304,11 @@ const App = () => {
 
         .item-card:hover { border-color: #c5a059; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
         
-        .image-wrapper { background: #fff; padding: 10px; border-radius: 2px; margin-bottom: 12px; }
+        .image-wrapper { background: #f8f8f8; padding: 10px; border-radius: 2px; margin-bottom: 12px; }
         .thumbnail-image { width: 100%; aspect-ratio: 8.5 / 11; object-fit: contain; object-position: top; }
         
         .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .item-name { font-size: 16px; font-weight: 600; color: #333; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
+        .item-name { font-size: 14px; font-weight: 600; color: #333; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .add-btn { flex-shrink: 0; background: #111; color: #c5a059; border: none; border-radius: 2px; width: 28px; height: 28px; font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
         .add-btn:hover { background: #c5a059; color: #111; }
@@ -362,7 +318,7 @@ const App = () => {
         .queue-panel { background: #fff; border: 1px solid #eaeaea; border-top: 4px solid #111; padding: 20px 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
         
         .queue-header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; }
-        .panel-header { font-weight: 800; font-size: 26px; color: #111; margin: 0; text-transform: uppercase; }
+        .panel-header { font-weight: 800; font-size: 18px; color: #111; margin: 0; text-transform: uppercase; }
         .badge { background: #f0f0f0; color: #555; padding: 3px 8px; border-radius: 20px; font-size: 12px; font-weight: 800; }
         
         .empty-state { color: #999; font-style: italic; font-weight: 400; font-size: 13px; margin-top: 10px; }
